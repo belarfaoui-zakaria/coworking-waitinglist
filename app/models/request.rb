@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: requests
@@ -56,7 +58,7 @@ class Request < ApplicationRecord
 
   def confirm!
     confirm
-    save
+    regenerate_confirmation_token
   end
 
   private

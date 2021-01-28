@@ -1,0 +1,17 @@
+ <%= form_with(model: @request, url: requests_path) do |f| %>
+  <%= f.fields_for :freelancer do |fr|%>
+        <%= fr.label :name %>
+        <%= fr.text_field :name %>
+
+        <%= fr.label :email %>
+        <%= fr.email_field :email %>
+
+        <%= fr.label :phone %>
+        <%= fr.phone_field :phone_number %>
+
+        <%= fr.label :biography %>
+        <%= fr.text_field :biography %>
+  <% end%>
+
+  <%= f.submit "Soumettre" %>
+<% end %>

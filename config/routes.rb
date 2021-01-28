@@ -3,5 +3,9 @@ Rails.application.routes.draw do
 
   root 'requests#new'
 
-  resources :requests, only: %i[new create]
+  resources :requests, only: %i[new create] do 
+    collection do 
+      get "confirmation/:token" => "requests#confirm", as: :email_confirmation
+    end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: requests
@@ -20,47 +22,48 @@ RSpec.describe Request, type: :model do
   let(:invalid_freelancer) { Freelancer.new }
 
   describe 'associations' do
-    it { should belong_to(:freelancer) }
+    it { is_expected.to belong_to(:freelancer) }
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:freelancer) }
+    it { is_expected.to validate_presence_of(:freelancer) }
+
     it "souldn't be valid with invalid freelancer" do
       subject.freelancer = invalid_freelancer
-      expect(subject).to_not be_valid
+      expect(subject).not_to be_valid
     end
   end
 
   describe 'request creation' do
-    it 'should have state unconfirmed' do
+    it 'has state unconfirmed' do
       expect(subject.state).to eq('unconfirmed')
     end
 
-    it 'should have a confirmation token' do
+    it 'has a confirmation token' do
       expect(subject.confirmation_token).to be_present
     end
   end
 
   describe 'request confirmation' do
-    it 'should change state to confirmed' do
+    it 'changes state to confirmed' do
       subject.confirm!
       expect(subject.state).to eq('confirmed')
-      expect(subject.confirmed_at).to_not be_nil
+      expect(subject.confirmed_at).not_to be_nil
     end
   end
 
   describe 'request acceptance' do
-    it 'should be invalid transition' do
+    it 'is invalid transition' do
       expect do
         subject.accept!
       end.to raise_error(AASM::InvalidTransition)
     end
 
-    it 'should accept request' do
+    it 'accepts request' do
       subject.confirm
       subject.accept!
       expect(subject.state).to eq('accepted')
-      expect(subject.accepted_at).to_not be_nil
+      expect(subject.accepted_at).not_to be_nil
     end
   end
 end

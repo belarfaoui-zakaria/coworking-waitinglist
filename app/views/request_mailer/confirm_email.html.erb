@@ -1,0 +1,9 @@
+<h1>
+  Confirmer l’adresse e-mail
+</h1>
+<p>
+  Merci de votre inscription sur Workspace. Veuillez confirmer votre adresse e-mail.
+</p>
+<p>
+  <%= link_to 'Confirmer votre email', email_confirmation_requests_url(token: @request.confirmation_token) %>
+</p>

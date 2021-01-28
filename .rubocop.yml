@@ -1,0 +1,61 @@
+require: rubocop-rspec
+
+AllCops:
+  SuggestExtensions: false
+  Exclude:
+    - node_modules/**/*
+    - config/**/*
+    - bin/**/*
+    - config/boot.rb
+    - db/schema.rb
+    - script/**/*
+    - tmp/**/*
+    - vendor/**/*
+    - Rakefile
+    - Dangerfile
+    - Gemfile
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/ParameterAlignment:
+  Enabled: false
+
+Metrics/ClassLength:
+  CountComments: false
+  Max: 150
+
+Metrics/ModuleLength:
+  CountComments: false
+  Max: 250
+  Exclude:
+    - 'spec/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 150
+  Exclude:
+    - 'spec/**/*'
+    - 'db/**/*'
+    - 'bin/**/*'
+
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+Metrics/BlockLength:
+  CountComments: false
+  Max: 50
+  Exclude:
+    - 'spec/**/*'
+Lint/MissingSuper:
+  Enabled: false
+Metrics/MethodLength:
+  Exclude:
+    - db/**/*
+Metrics/AbcSize:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
