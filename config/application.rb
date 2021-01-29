@@ -17,5 +17,7 @@ module CoworkingWaitinglist
     # the framework and any gems in your application.
     config.action_mailer.default_url_options = { host: ENV['MAIL_HOST'] }
 
+    # config.active_job.queue_name_prefix = "cowork_#{Rails.env}"
+    config.active_job.queue_adapter = :sidekiq
   end
 end

@@ -1,0 +1,11 @@
+<h1>
+  Votre demande d'inscription expire dans 7 jours 
+</h1>
+<p>
+ Vous êtes sur la liste d'attente depuis 3 mois. <br />
+ Si vous êtes toujours intéressé par cette offre. <br />
+ Merci de nous confirmer en cliquant sur le lien ci-dessous.
+</p>
+<p>
+  <%= link_to "Je reste sur la liste d'attente", reconfirmation_requests_url(token: @request.confirmation_token) %>
+</p>

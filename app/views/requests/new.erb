@@ -1,17 +1,37 @@
- <%= form_with(model: @request, url: requests_path) do |f| %>
+ <div style="margin-bottom:50px">
+ <h3>Coworking space - Formulaire d'inscription</h3>
+</div>
+
+
+ <%= form_with(model: @request, url: requests_path, local: true) do |f| %>
   <%= f.fields_for :freelancer do |fr|%>
-        <%= fr.label :name %>
-        <%= fr.text_field :name %>
+      <small id="passwordHelp" class="text-danger">
+            <ul>
+            <% @request&.freelancer&.errors&.full_messages&.each do |message| %>
+                  <li><%= message %></li>
+            <% end %>
+            </ul>
+      </small>  
+      <div class="form-group">
+            <%= fr.label :email, text: "Adresse email" %>
+            <%= fr.text_field :email, type: "email", class:"form-control" %>
+      </div>
 
-        <%= fr.label :email %>
-        <%= fr.email_field :email %>
+      <div class="form-group">
+            <%= fr.label :name, text: "Votre nom" %>
+            <%= fr.text_field :name, class:"form-control" %>
+      </div>
 
-        <%= fr.label :phone %>
-        <%= fr.phone_field :phone_number %>
+      <div class="form-group">
+            <%= fr.label :phone_number, text: "Telephone mobile" %>
+            <%= fr.text_field :phone_number, type: "phone", class:"form-control" %>
+      </div>
+      <div class="form-group">
+            <%= fr.label :biography, text: "Telephone mobile" %>
+            <%= fr.text_area :biography, class:"form-control" %>
+      </div>
 
-        <%= fr.label :biography %>
-        <%= fr.text_field :biography %>
   <% end%>
 
-  <%= f.submit "Soumettre" %>
+  <%= f.submit "Soumettre", class: "btn btn-lg btn-primary" %>
 <% end %>

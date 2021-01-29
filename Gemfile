@@ -72,3 +72,5 @@ end
 gem 'aasm', '~> 4.12'
 gem 'email_validator'
 gem "figaro"
+gem 'sidekiq', '~> 6.1.0'
+

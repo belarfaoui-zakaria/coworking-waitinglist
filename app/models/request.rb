@@ -30,7 +30,7 @@ class Request < ApplicationRecord
   include AASM
   aasm :state do
     state :unconfirmed, initial: true
-    state :confirmed, :accepted
+    state :confirmed, :accepted, :expired
 
     event :confirm do
       transitions from: :unconfirmed, to: :confirmed
@@ -46,9 +46,12 @@ class Request < ApplicationRecord
       end
     end
 
-    # event :sleep do
-    #   transitions from: [:running, :cleaning], to: :sleeping
-    # end
+    event :expire do
+      transitions from: [:confirmed], to: :expired
+      after do
+        on_request_expired
+      end
+    end
   end
 
   def accept!
@@ -59,15 +62,40 @@ class Request < ApplicationRecord
   def confirm!
     confirm
     regenerate_confirmation_token
+    save
+  end
+
+  def reconfirm!
+    self.will_expire_at += 3.months
+    regenerate_confirmation_token
+    create_expiration_reminder_jobs
+    save
+  end
+
+  def expire!
+    confirm
+    save
   end
 
   private
 
   def on_request_confirmed
     self.confirmed_at = DateTime.now
+    self.will_expire_at = 3.months.from_now.to_date
+    create_expiration_reminder_jobs
   end
 
   def on_request_accepted
     self.accepted_at = DateTime.now
+  end
+
+  def on_request_expired
+    self.expired_at = DateTime.now
+  end
+
+  def create_expiration_reminder_jobs
+    remind_at = will_expire_at - 1.week
+    RequestExpirationReminderJob.set(wait_until: remind_at).perform_later(request_id: id)
+    RequestExpirationJob.set(wait_until: will_expire_at).perform_later(request_id: id)
   end
 end

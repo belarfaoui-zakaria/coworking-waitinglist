@@ -24,7 +24,7 @@ class Freelancer < ApplicationRecord
   validate :freelancer_has_already_request
 
   def freelancer_has_already_request
-    request_exists = Request.joins(:freelancer).where('state != ? and lower(email) = ?', 'expired', email.downcase).exists?
-    errors.add(:have_existing_request, 'A request is already sent by this freelancer') if request_exists
+    request_exists = Request.joins(:freelancer).where('state != ? and lower(email) = ?', 'expired', email&.downcase).exists?
+    errors.add(:request_already_exist, 'use another email') if request_exists
   end
 end
