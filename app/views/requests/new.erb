@@ -2,10 +2,12 @@
  <h3>Coworking space - Formulaire d'inscription</h3>
 </div>
 
-
+<small class="text-success">
+    <%= flash[:info] %>
+  </small>
  <%= form_with(model: @request, url: requests_path, local: true) do |f| %>
   <%= f.fields_for :freelancer do |fr|%>
-      <small id="passwordHelp" class="text-danger">
+      <small class="text-danger">
             <ul>
             <% @request&.freelancer&.errors&.full_messages&.each do |message| %>
                   <li><%= message %></li>

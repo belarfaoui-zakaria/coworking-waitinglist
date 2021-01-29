@@ -47,7 +47,7 @@ class Request < ApplicationRecord
     end
 
     event :expire do
-      transitions from: [:confirmed], to: :expired
+      transitions from: %i[confirmed unconfirmed], to: :expired
       after do
         on_request_expired
       end
@@ -73,7 +73,7 @@ class Request < ApplicationRecord
   end
 
   def expire!
-    confirm
+    expire
     save
   end
 

@@ -4,7 +4,6 @@ class RequestsController < ApplicationController
   before_action :resolve_request_token, only: %i[confirm reconfirm]
   def new
     @request = Request.new
-    # @freelancer = Freelancer.new
   end
 
   def create
@@ -12,6 +11,8 @@ class RequestsController < ApplicationController
     @request.freelancer = Freelancer.new(request_params)
     if @request.save
       RequestMailer.with(request: @request).confirm_email.deliver_later
+      flash['info'] = 'Merci pour votre inscription.'
+      redirect_to :root
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,6 +24,7 @@ class RequestsController < ApplicationController
 
   def reconfirm
     @request.reconfirm!
+    render :confirm
   end
 
   private
